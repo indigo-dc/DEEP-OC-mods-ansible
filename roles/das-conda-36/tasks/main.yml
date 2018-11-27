@@ -1,0 +1,69 @@
+---
+# tasks file for the role
+
+  - name: Load variable files
+    include_vars:
+      dir: "{{ role_path }}/vars"
+      extensions: [yml]
+
+
+  - name: Check for existing installation
+    stat:
+      path: "{{ conda_bin }}"
+    register: anaconda_bin_conda
+
+
+  - when: not anaconda_bin_conda.stat.exists
+    block:
+    - name: Download the installer ...
+      get_url:
+        url: "{{ anaconda_installer_url }}"
+        dest: "{{ home_dir }}/{{ anaconda_installer_sh }}"
+        timeout: "{{ anaconda_timeout_seconds }}"
+        checksum: "{{ anaconda_checksum }}"
+        mode: 0755
+
+
+    - name: Run the installer ...
+      become: yes
+      shell: "bash {{ home_dir }}/{{ anaconda_installer_sh }} -f -b -p {{ anaconda_install_dir }}"
+
+
+    - name: Make conda as the system default
+      become: yes
+      copy:
+        dest: /etc/profile.d/conda.sh
+        content: "PATH={{ anaconda_install_dir }}/bin:$PATH"
+
+
+    - name: Update packages ...
+      become: yes
+      when: anaconda_pkg_update
+      command: "{{ item }}"
+      with_items:
+        - "{{ conda_bin }} update -y conda"
+        - "{{ conda_bin }} update -y --all"
+
+
+    always:
+    - name: Delete the installer ...
+      file:
+        path: "{{ home_dir }}/{{ anaconda_installer_sh }}"
+        state: absent
+
+
+  - when: create_user_virtual_env
+    block:
+    - name: Copy requirements
+      copy:
+        src: "{{ role_path }}/files/requirements.yml"
+        dest: "{{ home_dir }}/requirements.yml"
+        mode: 0644
+
+
+    - name: Create virtual environment for the user ... 
+      command: "{{ item }}"
+      with_items: 
+        - "{{ conda_bin }} env create -f {{ home_dir }}/requirements.yml"
+        - "{{ conda_bin }} env update -f {{ home_dir }}/requirements.yml"
+

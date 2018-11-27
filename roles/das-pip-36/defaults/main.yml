@@ -1,0 +1,6 @@
+---
+# defaults file for das-pip
+
+user_project_name: myproject
+
+user_virtual_env_name: env

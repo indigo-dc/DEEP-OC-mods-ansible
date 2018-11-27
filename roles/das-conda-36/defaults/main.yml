@@ -1,0 +1,15 @@
+---
+# defaults file for conda
+
+anaconda_mirror : https://repo.continuum.io/archive
+anaconda_installer_sh: Anaconda3-5.2.0-Linux-x86_64.sh
+anaconda_timeout_seconds : 600
+
+anaconda_checksums :
+  Anaconda3-5.2.0-Linux-x86_64.sh : md5:3e58f494ab9fbe12db4460dc152377b5
+
+anaconda_install_dir: /opt/anaconda
+anaconda_make_sys_default: true
+anaconda_pkg_update: true
+
+create_user_virtual_env: true

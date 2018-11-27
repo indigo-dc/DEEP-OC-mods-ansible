@@ -1,0 +1,10 @@
+[local]
+127.0.0.1
+
+[all]
+some_IP
+...
+
+[gzu]
+some_IP
+...

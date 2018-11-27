@@ -1,0 +1,6 @@
+---
+- hosts: ubuntu1804pip
+  roles:
+    - role: "{{ playbook_dir }}"
+      user_project_name: myproject
+      user_virtual_env_name: env

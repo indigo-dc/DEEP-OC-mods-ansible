@@ -1,0 +1,18 @@
+cython
+# mkl
+# mkl-service
+numpy
+scipy
+pandas
+tensorflow
+keras
+h5py
+scikit-learn
+matplotlib
+seaborn
+pydot
+flask
+gevent
+requests
+bat
+spyder

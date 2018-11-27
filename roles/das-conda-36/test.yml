@@ -1,0 +1,7 @@
+---
+- hosts: gzu
+  roles:
+    - role: "{{ playbook_dir }}"
+      anaconda_make_sys_default: true
+      anaconda_pkg_update: true
+      create_user_virtual_env: true

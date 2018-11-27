@@ -1,0 +1,9 @@
+---
+# vars file for conda
+
+anaconda_installer_url: "{{ anaconda_mirror }}/{{ anaconda_installer_sh }}"
+anaconda_checksum: "{{ anaconda_checksums[anaconda_installer_sh] }}"
+
+conda_bin: "{{ anaconda_install_dir }}/bin/conda" 
+
+home_dir: "{{ lookup('env', 'HOME') }}"   

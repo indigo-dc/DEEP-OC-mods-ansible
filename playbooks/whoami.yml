@@ -1,0 +1,7 @@
+# ansible-playbook whoaim.yml -vv
+# ansible-playbook whoaim.yml -vv -b
+---
+- hosts: all
+  tasks:
+    - name: Print the actual user
+      command: whoami

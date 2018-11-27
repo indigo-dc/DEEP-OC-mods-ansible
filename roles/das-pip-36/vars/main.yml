@@ -1,0 +1,6 @@
+---
+# vars file for das-pip
+
+python_bin: "/usr/bin/python" 
+
+home_dir: "{{ lookup('env', 'HOME') }}"

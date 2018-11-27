@@ -1,0 +1,56 @@
+---
+# tasks file for das-pip
+
+  - name: Load variable files
+    include_vars:
+      dir: "{{ role_path }}/vars"
+      extensions: [yml]
+
+
+  - name: Update and upgrade apt packages
+    become: yes
+    apt:
+      upgrade: yes
+      update_cache: yes
+
+
+  - name: Install list of packages
+    become: yes  
+    apt:
+      name: "{{ packages }}"
+    vars:
+      packages:
+        - curl
+        - git
+        - python3-setuptools
+        - python3-pip
+        - virtualenv
+        - build-essential
+        - python3-dev
+        - python3-wheel
+        - python3-tk
+
+
+  - name: Update pip
+    become: yes
+    command: pip3 install --upgrade pip
+
+
+  - name: Create project directory
+    file:
+      path: "{{ home_dir }}/{{ user_project_name }}"
+      state: directory
+
+
+  - name: Copy requirements
+    copy:
+      src: "{{ role_path }}/files/requirements.txt"
+      dest: "{{ home_dir }}/{{ user_project_name }}/requirements.txt"
+      mode: 0644
+
+
+  - name: Install requirements
+    pip:
+      virtualenv_python: python3.6 
+      virtualenv: "{{ home_dir }}/{{ user_project_name }}/{{ user_virtual_env_name }}"
+      requirements: "{{ home_dir }}/{{ user_project_name }}/requirements.txt"
