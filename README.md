@@ -1,4 +1,4 @@
-# DEEP as a Service: Ansible role for installing Data Analytic Stack (DAS)
+# DEEP as a Service: Ansible roles for installing Data Analytic Stack
 
 ![DEEP-Hybrid-DataCloud logo](https://deep-hybrid-datacloud.eu/wp-content/uploads/2018/01/logo.png)
 
